@@ -3,7 +3,7 @@
 ## Description
 Solver for the _well known_ portuguese 'Toca não toca' that uses a pretrained model for a Deep Neural Network (DNN). The solver makes use of google's Tensorflow and its higher abstraction layer TFLearn.
 
-The riddle description is as follows (in Portuguese)
+The riddle description is as follows (in Portuguese):
 ```
 Este enigma tem como chave o próprio nome, toca não toca.
 Por exemplo: lábios toca, toca não toca.
