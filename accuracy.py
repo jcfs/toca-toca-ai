@@ -46,18 +46,15 @@ def main():
   model = tflearn.DNN(regressor)
   model.load('model/toca.tflearn')
   
-  correct = 0
-  incorrect = 0
-  total = 0
+  correct, incorrect, total = 0, 0, 0
+
   with open('dataset/test/words-r.txt','r') as f:
     for line in f:
       s = line.split(";")
-      word = s[0]
-      o = int(s[1])
+      word, o = s[0], int(s[1])
       if len(word) > 16:
         continue
-      word = word.rstrip()
-      unrounded = model.predict(to_bits(word.ljust(16, ' ')))[0][0]
+      unrounded = model.predict(to_bits(word.rstrip().ljust(16)))[0][0]
 
       if (round(unrounded) == o):
         correct += 1        

@@ -24,11 +24,9 @@ def main():
   with open('dataset/train/words-big-r.txt','r') as f:
     for line in f:
       s = line.split(";")
-      word = s[0]
-      o = int(s[1])
+      word, o = s[0], int(s[1])
       if len(word) <= 16:
-        word = word.ljust(16)
-        r = to_bits(word)
+        r = to_bits(word.ljust(16))
         training.append([r, [o]])
 
   # shuffle our features and turn into np.array as tensorflow takes in numpy array
