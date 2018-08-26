@@ -1,3 +1,5 @@
 tensorflow
 tflearn
 numpy
+flask
+flask_restful

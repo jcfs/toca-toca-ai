@@ -1,3 +1,6 @@
+from flask import Flask, request
+from flask_restful import Resource, Api
+
 import numpy as np
 import tflearn
 import tensorflow as tf
@@ -33,28 +36,19 @@ def build_neural_network():
   model.load('model/toca.tflearn')
   return model
 
-def main():
-  '''
-  Builds the neural network and plays the solver.
-  '''
-  model = build_neural_network()
+model = build_neural_network()
+app = Flask(__name__)
+api = Api(app)
 
-  print("----------------------------------------")
-  print("          TOCA OU NÃO TOCA?             ")
-  print("----------------------------------------")
-  while True:
-    line = input("> ")
-    line = line.rstrip()
-
-    if (len(line) < 3 or len(line) > 16):
-      print("The word size must be between 3 and 16")
-      continue
-
-    unrounded = model.predict(to_bits(line.ljust(16, ' ')))[0][0]
+class Classifier(Resource):
+  def get(self, word):
+    unrounded = model.predict(to_bits(word.ljust(16, ' ')))[0][0]
     if (round(unrounded) == 1.0):
-      print(line + " toca [" + str(np.round(unrounded, 3)) + "]")
+      return "toca"
     else:
-      print(line + " não toca [" + str(np.round(unrounded, 3)) + "]")
+      return "nao toca"
+
+api.add_resource(Classifier, '/classify/<word>')
 
 if __name__ == "__main__":
-    main()
+  app.run(port='5002')
