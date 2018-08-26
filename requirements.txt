@@ -1,5 +1,4 @@
-tensorflow
-tflearn
 numpy
 flask
 flask_restful
+tflearn
